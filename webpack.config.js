@@ -1,21 +1,9 @@
-<<<<<<< HEAD
-var webpack = require("webpack");
-
-module.exports = {
-    entry: {
-        app: "js/main.js",
-        vendor: [
-            "jquery", 
-            "bootstrap-sass",
-        ]
-    }
-=======
 var path = require("path");
-var webpack = require("webpack");
 var copyWebpackPlugin = require("copy-webpack-plugin");
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+    mode: 'production',
 
     entry: {
         app: "./main.js"
@@ -26,30 +14,42 @@ module.exports = {
     },
 
     module: {
-        loaders: [{
-            test: /\.scss$/,
-            loader: ExtractTextPlugin.extract('css-loader!sass-loader')
-        }, {
-            test: /\.css$/,
-            loader: ExtractTextPlugin.extract('css-loader')
-        }, 
-        { 
-            test: /\.(woff|woff2|eot|ttf|otf)$/, 
-            loader: 'file-loader?name=fonts/[name].[ext]' 
-        },
-        { 
-            test: /\.(svg|gif|png|jpg|jpeg)$/, 
-            loader: 'file-loader?name=img/[name].[ext]' 
-        }
-    ]},
+        rules: [
+            {
+                test: /\.(scss|css)/,
+                use: [
+                    {loader: 'css-hot-loader'},
+                    MiniCssExtractPlugin.loader,
+                    {loader: 'css-loader'},
+                    {loader: 'postcss-loader'},
+                    {loader: 'sass-loader'},
+                ],
+            }, {
+                test: /\.(eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)/,
+                dependency: { not: ['url'] },
+                loader: 'url-loader',
+            }, {
+                test: /\.(ttf|otf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name].[ext]',
+                },
+            }, {
+                test: /\.(svg|png|jpg|gif)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'imgs/[name].[ext]',
+                },
+            },
+        ]
+    },
 
     plugins: [
-        new ExtractTextPlugin({
-            filename: 'style.css',
-            allChunks: true
+        new MiniCssExtractPlugin({
+            filename: `style.css`,
+            chunkFilename: `style.[id].css`,
         }),
-
-        new copyWebpackPlugin([
+        new copyWebpackPlugin({ patterns: [
             { from: "./index.html" },
             { from: "./img", to: "img" },
             { from: "node_modules/jquery/dist/jquery.min.js", to: "js" },
@@ -58,7 +58,6 @@ module.exports = {
 
             // { from: "node_modules/open-iconic/svg", to: "open-iconic/svg" },
             // { from: "node_modules/open-iconic/font", to: "open-iconic/font" }
-        ])
+        ]})
     ]
->>>>>>> cec96d8a464f60f3e901c84992fbdd388cf8dfa5
 }
