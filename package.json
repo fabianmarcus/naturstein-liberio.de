@@ -1,0 +1,27 @@
+{
+  "name": "naturstein-liberio.de",
+  "version": "1.0.0",
+  "description": "Stylesheets kompilieren mit:",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://fabezone@sabic.uberspace.de/home/fabezone/html/kunden/src/naturstein-liberio.de.git"
+  },
+  "author": "Fabian Marcus",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-sass": "^3.3.7",
+    "jquery": "^3.1.1",
+    "open-iconic": "^1.1.1",
+    "slick-carousel": "^1.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "webpack": "^2.2.1"
+  }
+}

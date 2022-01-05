@@ -1,0 +1,11 @@
+# System-Zeugs
+.DS_Store
+
+# Vendor-Zeugs
+node_modules
+
+# Build-Zeugs
+.sass-cache
+build
+npm-debug.log
+*.map
